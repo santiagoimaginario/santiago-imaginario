@@ -11,6 +11,22 @@ compatibility_date = "2026-08-27"
 [vars]
 B2_BUCKET_URL = "https://f004.backblazeb2.com/file/santiago-imaginario"
 
-# Las rutas se enganchan desde el panel cuando el dominio ya esté en Cloudflare:
-#   www.santiagoimaginario.com/*
-#   santiagoimaginario.com/*
+# Las rutas van acá y no en el panel: quedan en el repositorio, se aplican solas
+# en cada deploy y no hay que acordarse de nada.
+#
+# Son "routes" y no "custom_domain". La diferencia importa: con custom_domain el
+# Worker pasa a ser el origen y Cloudflare le reapunta el DNS, y entonces el
+# fetch(request) de adentro se llamaría a sí mismo en vez de llegar a Pages. Con
+# routes el Worker corre adelante del origen que ya existe, que es Pages, que es
+# lo que queremos.
+#
+# El apex está para que el Worker pueda redirigirlo a www. Sin la ruta, esa
+# redirección nunca corre.
+
+[[routes]]
+pattern = "www.santiagoimaginario.com/*"
+zone_name = "santiagoimaginario.com"
+
+[[routes]]
+pattern = "santiagoimaginario.com/*"
+zone_name = "santiagoimaginario.com"
