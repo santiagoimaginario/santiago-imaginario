@@ -119,11 +119,13 @@ Franco acepta la invitación que le llega por correo, y desde acá se sube todo:
 
 ## B · Cloudflare Pages (lo hace Santiago, en el panel)
 
-1. **Workers & Pages → Create → Pages → Connect to Git.**
-2. Autorizar GitHub y elegir el repositorio `santiago-imaginario`.
-3. Framework preset: **None**. Build command: **vacío**. Output directory: `/`.
+1. **Workers & Pages → Create application.**
+2. Ir a la pestaña **Pages** (la primera que aparece es la de Workers, no es esa).
+3. **Import an existing Git repository.**
+4. Autorizar GitHub y elegir `santiagoimaginario/santiago-imaginario`. **Begin setup.**
+5. Framework preset: **None**. Build command: **vacío**. Build output directory: `/`.
    El sitio no se compila: los archivos se publican tal como están.
-4. Save and Deploy.
+6. **Save and Deploy.**
 
 Al terminar, Pages da una dirección tipo `santiago-imaginario.pages.dev`. Ahí ya
 se puede ver el sitio andando, antes de tocar el dominio.
@@ -159,7 +161,30 @@ En el Worker, **Settings → Variables**, poner `B2_BUCKET_URL` con la direcció
 real del bucket. **Ojo con el número**: el de Franco es `f004` y el de Santiago
 puede ser otro. Si no coincide, no carga ningún mp3.
 
-## F · Subir los archivos
+## F · El correo
+
+`hola@santiagoimaginario.com` ya está puesto en el pie del sitio, así que esto
+hay que hacerlo **antes de mostrarle la página a nadie** o la dirección rebota.
+Es gratis y no hace falta contratar ninguna casilla: Cloudflare recibe el mail y
+lo reenvía al Gmail de siempre.
+
+1. **Compute → Email Service → Email Routing → Onboard Domain**, elegir
+   `santiagoimaginario.com` y **Done**. Eso agrega solo los registros MX, SPF y
+   DKIM que hacen falta.
+2. **Destination Addresses**: agregar `santiagopintosmartins@gmail.com`. Llega un
+   correo de verificación a esa casilla y hay que abrirlo y confirmar. Mientras
+   no esté verificada, la regla del paso siguiente queda apagada.
+3. **Routing Rules → Create routing rule**:
+   - Email pattern: `hola` + el dominio
+   - Action: **Send to an email**
+   - Destination: `santiagopintosmartins@gmail.com`
+4. Probarlo mandando un mail a `hola@santiagoimaginario.com` **desde otra
+   casilla** que no sea ese mismo Gmail: algunos proveedores tiran los mensajes
+   que parecen venir de uno mismo. Si no aparece, mirar en spam.
+
+Los registros de DNS tardan entre cinco minutos y un rato largo en propagarse.
+
+## G · Subir los archivos
 
 Los de la lista de abajo, arrastrándolos a la web de Backblaze.
 
