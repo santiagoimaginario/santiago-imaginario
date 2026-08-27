@@ -313,9 +313,10 @@ y se ve en la recarga siguiente. Sin modo incógnito, sin borrar caché.
 
 Eso funciona porque hay dos piezas puestas a propósito, y conviene no deshacerlas:
 
-- El HTML sale con `no-cache`, o sea que el navegador siempre pregunta si cambió
-  antes de mostrarlo. Cuando no cambió le contestan 304 y no baja nada, así que
-  no cuesta casi nada.
+- El HTML sale con `no-cache`, o sea que el navegador lo pide de nuevo en cada
+  visita. Se probó y Pages no manda `ETag` ni `Last-Modified`, así que no hay
+  manera de contestar "no cambió": la página baja entera. Son **2,8 KB
+  comprimidos**, y es el precio de que una edición se vea al recargar.
 - El service worker pide las páginas **a la red primero**. Antes hacía lo
   contrario —servía la copia guardada y actualizaba por atrás— y eso hacía que un
   cambio se viera recién en la visita siguiente. La copia guardada quedó solo para

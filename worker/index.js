@@ -101,14 +101,18 @@ const CSP =
 
 // Configuración de caché por tipo de archivo.
 const CACHE_CONFIG = {
-    // El HTML revalida siempre. No es lo mismo que "no guardar": el navegador se
-    // queda la copia y pregunta si cambió, y cuando no cambió le contestan 304 sin
-    // cuerpo, que son unos bytes. A cambio, una edición se ve en la recarga
-    // siguiente y no un minuto después.
+    // El HTML se pide en cada visita. Se probó y Pages no manda ni ETag ni
+    // Last-Modified, así que no hay validador y no hay 304 posible: la página
+    // baja entera siempre. Son 2,8 KB comprimidos. Ese es el precio de que una
+    // edición se vea al recargar, y para este sitio vale la pena.
     //
-    // Con max-age=60 no alcanzaba con arreglar el service worker: su fetch pasa
-    // igual por la caché HTTP del navegador, así que la página seguía saliendo
-    // vieja hasta que venciera ese minuto.
+    // No es más caro que lo que hace Pages por su cuenta, que manda
+    // max-age=0, must-revalidate y tampoco trae validador. El max-age=60 que
+    // había antes era una optimización que cambiaba frescura por ahorro.
+    //
+    // Y hacía falta además de arreglar el service worker, no en vez de: el fetch
+    // del service worker pasa igual por la caché HTTP del navegador, así que con
+    // max-age=60 la página seguía saliendo vieja hasta que venciera el minuto.
     html: { ttl: 60, browser: 'no-cache' },
     // sw.js se registra en una ruta fija y no puede llevar ?v=, así que es el
     // único archivo que no se puede versionar por URL. Si se cachea, un cambio de
