@@ -1,0 +1,58 @@
+{
+  "_nota": "Catálogo de lo que hay publicado, con la misma idea que obras/obras.json de franco-citera. HOY NO GENERA NADA: el HTML de verdad es index.html y se edita ahí. Esto es el índice para más adelante (una página de archivo, un RSS, un sitemap que se arme solo). Si un día pasa a mandar, index.html deja de editarse a mano y se avisa.",
+  "entradas": [
+    {
+      "id": "lluvia",
+      "titulo": "¡lluvia!",
+      "fecha": "2026-07-23",
+      "tipo": "musica",
+      "etiqueta": "EP",
+      "portada": "/lluvia.webp",
+      "temas": [
+        {
+          "id": "miles-de-cables",
+          "titulo": "Miles de Cables",
+          "url": "/miles-de-cables.mp3",
+          "duracion": null
+        },
+        {
+          "id": "yee-haw",
+          "titulo": "Yee-Haw",
+          "url": "/yee-haw.mp3",
+          "duracion": null
+        },
+        {
+          "id": "ocurre-aqui",
+          "titulo": "Ocurre Aquí",
+          "url": "/ocurre-aqui.mp3",
+          "duracion": null
+        },
+        {
+          "id": "pesadilla-disney",
+          "titulo": "Pesadilla Disney",
+          "url": "/pesadilla-disney.mp3",
+          "duracion": null
+        },
+        {
+          "id": "buses",
+          "titulo": "Buses",
+          "url": "/buses.mp3",
+          "duracion": null
+        },
+        {
+          "id": "mundo-nuevo",
+          "titulo": "Mundo Nuevo",
+          "url": "/mundo-nuevo.mp3",
+          "duracion": null
+        }
+      ]
+    },
+    {
+      "id": "hola",
+      "titulo": "Hola",
+      "fecha": "2026-07-20",
+      "tipo": "texto",
+      "etiqueta": "Texto"
+    }
+  ]
+}

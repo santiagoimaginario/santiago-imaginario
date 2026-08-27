@@ -1,0 +1,12 @@
+name = "santiago-imaginario"
+main = "index.js"
+compatibility_date = "2026-08-27"
+
+# La dirección del bucket de B2. Se puede cambiar acá o desde el panel de
+# Cloudflare (Settings -> Variables) sin tocar el código.
+[vars]
+B2_BUCKET_URL = "https://f004.backblazeb2.com/file/santiago-imaginario"
+
+# Las rutas se enganchan desde el panel cuando el dominio ya esté en Cloudflare:
+#   www.santiagoimaginario.com/*
+#   santiagoimaginario.com/*
