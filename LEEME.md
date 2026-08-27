@@ -217,26 +217,36 @@ puede ser otro. Si no coincide, no carga ningún mp3.
 
 ## F · El correo
 
-`hola@santiagoimaginario.com` ya está puesto en el pie del sitio, así que esto
-hay que hacerlo **antes de mostrarle la página a nadie** o la dirección rebota.
-Es gratis y no hace falta contratar ninguna casilla: Cloudflare recibe el mail y
-lo reenvía al Gmail de siempre.
+En el pie del sitio va **`santiagoimaginario@gmail.com`**, directo. Sin
+intermediarios, sin configuración y sin nada que se pueda romper.
 
-1. **Compute → Email Service → Email Routing → Onboard Domain**, elegir
-   `santiagoimaginario.com` y **Done**. Eso agrega solo los registros MX, SPF y
-   DKIM que hacen falta.
-2. **Destination Addresses**: agregar `santiagopintosmartins@gmail.com`. Llega un
-   correo de verificación a esa casilla y hay que abrirlo y confirmar. Mientras
-   no esté verificada, la regla del paso siguiente queda apagada.
-3. **Routing Rules → Create routing rule**:
-   - Email pattern: `hola` + el dominio
-   - Action: **Send to an email**
-   - Destination: `santiagopintosmartins@gmail.com`
-4. Probarlo mandando un mail a `hola@santiagoimaginario.com` **desde otra
-   casilla** que no sea ese mismo Gmail: algunos proveedores tiran los mensajes
-   que parecen venir de uno mismo. Si no aparece, mirar en spam.
+Se probó el camino largo y no valió la pena. Queda anotado por si algún día se
+retoma:
 
-Los registros de DNS tardan entre cinco minutos y un rato largo en propagarse.
+**Recibir en una dirección del dominio ya funciona.** Email Routing está activo y
+`hola@santiagoimaginario.com` reenvía a `santiagopintosmartins@gmail.com`. Se deja
+prendido: no molesta, no cuesta nada, y si alguna vez se quiere usar esa dirección
+ya está lista.
+
+**Enviar desde una dirección del dominio es lo que no salió gratis.** Para que una
+respuesta salga *desde* `hola@santiagoimaginario.com` hace falta un SMTP, porque
+Email Routing solo recibe. Las tres opciones que hay:
+
+- **Cloudflare Email Sending** — el más prolijo, todo en el mismo lugar
+  (`smtp.mx.cloudflare.net:465`, usuario literal `api_token`, contraseña un token
+  con permiso *Email Sending: Edit*). Pide el plan **Workers Paid**, unos 5 USD al
+  mes, y está en Beta.
+- **Un SMTP de otro proveedor** con capa gratis, tipo Brevo: 300 correos por día,
+  para siempre y sin tarjeta, pero **aprueban las cuentas a mano** antes de
+  habilitar el envío. Se engancha al *Enviar como* de Gmail.
+- **Nada.** Que sea un Gmail y listo, que es lo que se eligió.
+
+Si algún día se hace la segunda, la trampa está en el SPF: hoy el dominio tiene
+**un solo** registro y dice
+`v=spf1 include:_spf.mx.cloudflare.net ~all`. Hay que **editarlo** para que quede
+`v=spf1 include:_spf.mx.cloudflare.net include:spf.brevo.com ~all`. Si en vez de
+editarlo se agrega un TXT nuevo, el dominio queda con dos SPF y eso invalida los
+dos: los correos salen, pero caen en spam.
 
 ## G · Subir los archivos
 
