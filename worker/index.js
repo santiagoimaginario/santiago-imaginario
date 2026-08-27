@@ -101,7 +101,19 @@ const CSP =
 
 // Configuración de caché por tipo de archivo.
 const CACHE_CONFIG = {
-    html: { ttl: 60, browser: 'public, max-age=60' },
+    // El HTML revalida siempre. No es lo mismo que "no guardar": el navegador se
+    // queda la copia y pregunta si cambió, y cuando no cambió le contestan 304 sin
+    // cuerpo, que son unos bytes. A cambio, una edición se ve en la recarga
+    // siguiente y no un minuto después.
+    //
+    // Con max-age=60 no alcanzaba con arreglar el service worker: su fetch pasa
+    // igual por la caché HTTP del navegador, así que la página seguía saliendo
+    // vieja hasta que venciera ese minuto.
+    html: { ttl: 60, browser: 'no-cache' },
+    // sw.js se registra en una ruta fija y no puede llevar ?v=, así que es el
+    // único archivo que no se puede versionar por URL. Si se cachea, un cambio de
+    // estrategia puede tardar en llegar. Revalida siempre, igual que el HTML.
+    serviceWorker: { ttl: 0, browser: 'no-cache' },
     css: { ttl: 86400, browser: 'public, max-age=3600' },
     js: { ttl: 86400, browser: 'public, max-age=3600' },
     json: { ttl: 86400, browser: 'public, max-age=3600' },
@@ -391,6 +403,7 @@ function getCacheConfig(pathname, search = '') {
     // llevar versión, y con caché de un año quedaría congelado.
     if (/[?&]v=/.test(search)) return CACHE_CONFIG.versionado;
 
+    if (pathname === '/sw.js') return CACHE_CONFIG.serviceWorker;
     if (pathname.match(/\.(html|htm)$/)) return CACHE_CONFIG.html;
     if (pathname.match(/\.(css)$/)) return CACHE_CONFIG.css;
     if (pathname.match(/\.(m?js)$/)) return CACHE_CONFIG.js;

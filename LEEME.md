@@ -306,18 +306,32 @@ escuchando el viejo, porque queda guardado en el camino.
 
 ---
 
-# La regla del `?v=`
+# Cómo llega un cambio al visitante
+
+**Si tocás solo el texto de `index.html`, no hay que hacer nada.** Se publica solo
+y se ve en la recarga siguiente. Sin modo incógnito, sin borrar caché.
+
+Eso funciona porque hay dos piezas puestas a propósito, y conviene no deshacerlas:
+
+- El HTML sale con `no-cache`, o sea que el navegador siempre pregunta si cambió
+  antes de mostrarlo. Cuando no cambió le contestan 304 y no baja nada, así que
+  no cuesta casi nada.
+- El service worker pide las páginas **a la red primero**. Antes hacía lo
+  contrario —servía la copia guardada y actualizaba por atrás— y eso hacía que un
+  cambio se viera recién en la visita siguiente. La copia guardada quedó solo para
+  cuando no hay internet.
+
+## La regla del `?v=`, que sigue viva para el diseño
 
 En `index.html` el CSS y el JS se piden así:
 
-    css/main.css?v=1
-    js/script.js?v=1
+    css/main.css?v=2
+    js/script.js?v=2
 
-Ese número existe para que, cuando cambie el diseño, a la gente que ya visitó el
-sitio le llegue lo nuevo en vez de quedarse con lo viejo guardado.
+Esos dos sí se guardan por un año, porque el número en la URL identifica la
+versión. **Si se toca `css/main.css` o `js/script.js`, hay que subir el número en
+tres lugares y que queden iguales:** las dos líneas de `index.html` y la constante
+`VERSION` de `sw.js`. Si no, el cambio de diseño no le llega a quien ya visitó.
 
-**Si se toca `css/main.css` o `js/script.js`, hay que subir el número en tres
-lugares y que queden iguales:** las dos líneas de `index.html` y la constante
-`VERSION` de `sw.js`.
-
-Si se toca solo el texto de `index.html`, no hay que tocar nada de esto.
+Para el texto de las entradas esto no aplica. Es solo para el diseño y el
+reproductor, que los toca Franco y no Santiago.

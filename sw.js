@@ -1,7 +1,7 @@
 /* Sirve el sitio aunque no haya internet. La VERSION tiene que ir junto con el
    ?v= de index.html: si cambia el CSS o el JS y este número no se mueve, el
    navegador de quien ya visitó el sitio sigue mostrando lo viejo. */
-const VERSION = '1';
+const VERSION = '2';
 const CACHE = `santiago-imaginario-v${VERSION}`;
 
 const PRECACHE = [
@@ -88,23 +88,26 @@ function redPrimero(event) {
     .catch(() => caches.match(event.request));
 }
 
+/* Las páginas van a la red primero, siempre.
+
+   Antes iban al revés: se servía la copia guardada al instante y se actualizaba
+   por atrás. Rapidísimo, pero el cambio recién se veía en la visita SIGUIENTE.
+   Para un sitio que se edita desde el navegador eso es inaceptable: Santiago
+   escribe, publica, recarga, y sigue viendo lo de antes.
+
+   La copia guardada queda solo para cuando no hay internet, que es para lo que
+   sirve de verdad. El HTML son 11 KB, así que la espera no se nota. */
 function navegacion(event) {
-  return caches.open(CACHE).then(cache =>
-    cache.match(event.request).then(guardado => {
-      const red = Promise.resolve(event.preloadResponse)
-        .then(precargada => precargada || fetch(event.request))
-        .then(res => {
-          if (guardable(event.request, res)) cache.put(event.request, res.clone());
-          return res;
-        })
-        .catch(() => guardado || caches.match('/'));
-      if (guardado) {
-        event.waitUntil(red);
-        return guardado;
+  return Promise.resolve(event.preloadResponse)
+    .then(precargada => precargada || fetch(event.request))
+    .then(res => {
+      if (guardable(event.request, res)) {
+        const copia = res.clone();
+        event.waitUntil(caches.open(CACHE).then(cache => cache.put(event.request, copia)));
       }
-      return red;
+      return res;
     })
-  );
+    .catch(() => caches.match(event.request).then(g => g || caches.match('/')));
 }
 
 self.addEventListener('fetch', event => {
