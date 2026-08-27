@@ -178,14 +178,36 @@ Acá es el correcto, y se hace todo desde el navegador, sin bajar nada.
 5. Build command: **vacío**. Deploy command: `npx wrangler deploy`.
 6. **Deploy.**
 
-Y después, en el panel del Worker, **Settings → Domains & Routes**, agregar:
-
-- `www.santiagoimaginario.com/*`
-- `santiagoimaginario.com/*`
+Las rutas **no** hay que agregarlas a mano: están declaradas en
+`worker/wrangler.toml` y se crean solas en cada deploy. Son `routes` y no
+`custom_domain` a propósito — con `custom_domain` el Worker pasa a ser el origen
+y Cloudflare le reapunta el DNS, y entonces el `fetch(request)` de adentro se
+llamaría a sí mismo en vez de llegar a Pages.
 
 Es el mismo enganche que tiene francocitera.com: el Worker adelante y Pages como
 origen. Como queda conectado al repositorio, cada push que toque `worker/` lo
 vuelve a desplegar solo.
+
+### Las tres trampas de este paso
+
+Las tres nos pasaron el 27 de agosto de 2026 y ninguna avisa con un error claro.
+
+**1. Root directory.** Si queda en `/`, wrangler no encuentra el `wrangler.toml`
+—que está en `worker/`— y Cloudflare, en vez de fallar, entra en su modo de
+configuración automática y **despliega un Worker de ejemplo que dice "Hello
+world"**. El build sale en verde, no hay ningún error en ningún log, y el Worker
+existe pero no hace nada de lo nuestro. Tiene que decir `/worker`.
+
+**2. El token del build.** En **Settings → Builds**, abajo de todo, está el API
+token con el que el build se autentica para subir el Worker. Si dice *"Configured
+API token unavailable"*, ningún build posterior puede desplegar: queda para
+siempre lo que se subió la primera vez. Se arregla creando uno nuevo desde ese
+mismo desplegable.
+
+**3. Add Domain vs Add Route.** El botón grande y azul es *Add Domain* y es el
+equivocado. Da el error *"already has externally managed DNS records"* y sugiere
+borrar esos registros — **no hay que borrarlos**, son los que Pages creó en el
+paso C y son los que hacen que el sitio exista.
 
 ## E · La dirección de B2
 
