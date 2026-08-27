@@ -164,10 +164,19 @@ tiene que existir.
 
 ## D · El Worker
 
-Desde la carpeta `worker/`:
+Este sí sale del flujo de Workers, el mismo que aparece por defecto en el paso B.
+Acá es el correcto, y se hace todo desde el navegador, sin bajar nada.
 
-    npx wrangler login
-    npx wrangler deploy
+1. **Workers & Pages → Create application → Import a repository.**
+2. Elegir `santiagoimaginario/santiago-imaginario`.
+3. **Project name: `santiago-imaginario-worker`.** Tiene que decir exactamente eso:
+   es el nombre que está en `worker/wrangler.toml` y si no coinciden, el build falla.
+   Tampoco puede llamarse `santiago-imaginario` a secas, porque ese nombre ya se lo
+   quedó el proyecto de Pages.
+4. **Advanced settings → Root directory: `worker`.** Sin esto, `wrangler` busca la
+   configuración en la raíz del repositorio, donde no está, y falla.
+5. Build command: **vacío**. Deploy command: `npx wrangler deploy`.
+6. **Deploy.**
 
 Y después, en el panel del Worker, **Settings → Domains & Routes**, agregar:
 
@@ -175,7 +184,8 @@ Y después, en el panel del Worker, **Settings → Domains & Routes**, agregar:
 - `santiagoimaginario.com/*`
 
 Es el mismo enganche que tiene francocitera.com: el Worker adelante y Pages como
-origen.
+origen. Como queda conectado al repositorio, cada push que toque `worker/` lo
+vuelve a desplegar solo.
 
 ## E · La dirección de B2
 

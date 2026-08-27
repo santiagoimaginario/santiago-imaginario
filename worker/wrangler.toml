@@ -1,4 +1,8 @@
-name = "santiago-imaginario"
+# El proyecto de Pages ya se llama santiago-imaginario y comparten lista en el
+# panel, asi que el Worker necesita otro nombre. Ademas, si el Worker se despliega
+# desde el repositorio, este nombre tiene que coincidir exactamente con el del
+# panel o el build falla.
+name = "santiago-imaginario-worker"
 main = "index.js"
 compatibility_date = "2026-08-27"
 
