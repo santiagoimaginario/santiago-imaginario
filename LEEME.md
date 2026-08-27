@@ -119,13 +119,35 @@ Franco acepta la invitación que le llega por correo, y desde acá se sube todo:
 
 ## B · Cloudflare Pages (lo hace Santiago, en el panel)
 
-1. **Workers & Pages → Create application.**
-2. Ir a la pestaña **Pages** (la primera que aparece es la de Workers, no es esa).
-3. **Import an existing Git repository.**
-4. Autorizar GitHub y elegir `santiagoimaginario/santiago-imaginario`. **Begin setup.**
-5. Framework preset: **None**. Build command: **vacío**. Build output directory: `/`.
+**Esto hay que hacerlo bien de una.** La conexión con GitHub solo se puede
+configurar en el momento de crear el proyecto: si queda mal, no se corrige
+después, hay que borrar el proyecto y empezarlo de nuevo.
+
+**Y ojo con la pestaña.** Cloudflare empuja Workers, así que el camino por
+defecto lleva ahí. Si en algún momento la pantalla dice *Create a Worker*, o
+aparece un campo **Deploy command** con `npx wrangler deploy`, estás en el flujo
+equivocado: volvé atrás. En el de Pages ese campo no existe.
+
+1. Ir a **Workers & Pages**: https://dash.cloudflare.com/?to=/:account/workers-and-pages
+2. **Create application.**
+3. Ir a la pestaña **Pages**. La que abre por defecto es la de Workers.
+4. **Import an existing Git repository** (en algunos paneles dice *Connect to Git*).
+5. Autorizar GitHub y elegir `santiagoimaginario/santiago-imaginario`. **Begin setup.**
+6. En **Set up builds and deployments**:
+
+   | Campo | Valor |
+   |---|---|
+   | Project name | `santiago-imaginario` |
+   | Production branch | `main` |
+   | Framework preset | **None** |
+   | Build command | **vacío** |
+   | Build output directory | `/` |
+
    El sitio no se compila: los archivos se publican tal como están.
-6. **Save and Deploy.**
+7. **Save and Deploy.**
+
+Si el nombre `santiago-imaginario` aparece ocupado, es porque quedó un Worker a
+medio crear con ese nombre. Hay que borrarlo desde Workers & Pages y volver.
 
 Al terminar, Pages da una dirección tipo `santiago-imaginario.pages.dev`. Ahí ya
 se puede ver el sitio andando, antes de tocar el dominio.
