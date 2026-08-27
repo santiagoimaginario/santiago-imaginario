@@ -97,6 +97,74 @@ correr.
 
 ---
 
+# Publicar la primera versión
+
+El código ya está commiteado en `main`. Falta engancharlo a las cuentas. El orden
+importa: cada paso necesita el anterior.
+
+## A · El repositorio (lo hace Santiago, en el navegador)
+
+1. Entrar a **github.com/new**.
+2. Nombre: `santiago-imaginario`. Puede ser público o privado.
+3. **No** tildar README, .gitignore ni licencia: el repositorio tiene que quedar
+   vacío, porque el contenido ya está armado acá y se sube entero.
+4. Create repository.
+5. Adentro del repositorio nuevo: **Settings → Collaborators → Add people** y
+   agregar a `FrancoCitera`.
+
+Franco acepta la invitación que le llega por correo, y desde acá se sube todo:
+
+    git remote add origin https://github.com/USUARIO/santiago-imaginario.git
+    git push -u origin main
+
+## B · Cloudflare Pages (lo hace Santiago, en el panel)
+
+1. **Workers & Pages → Create → Pages → Connect to Git.**
+2. Autorizar GitHub y elegir el repositorio `santiago-imaginario`.
+3. Framework preset: **None**. Build command: **vacío**. Output directory: `/`.
+   El sitio no se compila: los archivos se publican tal como están.
+4. Save and Deploy.
+
+Al terminar, Pages da una dirección tipo `santiago-imaginario.pages.dev`. Ahí ya
+se puede ver el sitio andando, antes de tocar el dominio.
+
+## C · El dominio
+
+En el proyecto de Pages, **Custom domains**, agregar las dos:
+
+- `www.santiagoimaginario.com`
+- `santiagoimaginario.com`
+
+Las dos hacen falta: el Worker manda la segunda a la primera, pero para eso
+tiene que existir.
+
+## D · El Worker
+
+Desde la carpeta `worker/`:
+
+    npx wrangler login
+    npx wrangler deploy
+
+Y después, en el panel del Worker, **Settings → Domains & Routes**, agregar:
+
+- `www.santiagoimaginario.com/*`
+- `santiagoimaginario.com/*`
+
+Es el mismo enganche que tiene francocitera.com: el Worker adelante y Pages como
+origen.
+
+## E · La dirección de B2
+
+En el Worker, **Settings → Variables**, poner `B2_BUCKET_URL` con la dirección
+real del bucket. **Ojo con el número**: el de Franco es `f004` y el de Santiago
+puede ser otro. Si no coincide, no carga ningún mp3.
+
+## F · Subir los archivos
+
+Los de la lista de abajo, arrastrándolos a la web de Backblaze.
+
+---
+
 # Cómo edita Santiago, desde el navegador y sin instalar nada
 
 Sin programas, sin archivos en la computadora. Dos formas:
