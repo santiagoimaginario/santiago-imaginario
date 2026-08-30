@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
     <link rel="preload" href="css/main.css?v=2" as="style">
     <link rel="stylesheet" href="css/main.css?v=2">
-
     <title>Santiago Imaginario</title>
     <meta name="description" content="Santiago Imaginario">
     <link rel="canonical" href="https://www.santiagoimaginario.com">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Santiago Imaginario">
     <meta property="og:title" content="Santiago Imaginario">
@@ -29,16 +26,41 @@
     <meta name="twitter:title" content="Santiago Imaginario">
     <meta name="twitter:description" content="Santiago Imaginario">
     <meta name="twitter:image" content="https://www.santiagoimaginario.com/santiago-imaginario-preview.webp">
-
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cabecera {
+            padding: 0;
+            text-align: center;
+        }
+        .cabecera-foto {
+            display: block;
+            max-width: 280px;
+            width: 60vw;
+            height: auto;
+            margin: 24px auto 0;
+        }
+        .cabecera-foto.al-reves {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
-
 <body>
     <header class="cabecera">
         <h1 class="titular">santiago imaginario</h1>
+        <img class="cabecera-foto" id="foto-random" src="/sanntiagua.webp" alt="">
     </header>
-
+    <script>
+        if (Math.random() < 0.5) {
+            document.getElementById('foto-random').classList.add('al-reves');
+        }
+    </script>
     <script src="js/script.js?v=2" defer></script>
 </body>
 </html>
