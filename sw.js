@@ -1,7 +1,7 @@
 /* Sirve el sitio aunque no haya internet. La VERSION tiene que ir junto con el
    ?v= de index.html: si cambia el CSS o el JS y este número no se mueve, el
    navegador de quien ya visitó el sitio sigue mostrando lo viejo. */
-const VERSION = '2';
+const VERSION = '3';
 const CACHE = `santiago-imaginario-v${VERSION}`;
 
 const PRECACHE = [

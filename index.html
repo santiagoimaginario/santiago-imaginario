@@ -6,8 +6,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
-    <link rel="preload" href="css/main.css?v=2" as="style">
-    <link rel="stylesheet" href="css/main.css?v=2">
+    <link rel="preload" href="css/main.css?v=3" as="style">
+    <link rel="stylesheet" href="css/main.css?v=3">
     <title>santiagoimaginario</title>
     <meta name="description" content="santiago imaginario">
     <link rel="canonical" href="https://www.santiagoimaginario.com">
@@ -32,12 +32,16 @@
         body {
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
         }
         .cabecera {
+            flex: 1 0 auto;
             padding: 0;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .cabecera-foto {
             display: block;
@@ -56,11 +60,28 @@
         <h1 class="titular">santiago imaginario</h1>
         <img class="cabecera-foto" id="foto-random" src="/sanntiagua.webp" alt="">
     </header>
+    <!-- enlaces externos, no es un formulario de contacto -->
+    <footer class="pie">
+        <ul class="pie-enlaces">
+            <li><a href="https://open.spotify.com/artist/3vB8iBxpZvQHgWnpqqiJuX" rel="me noopener" aria-label="Spotify">
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.59 14.4a.62.62 0 0 1-.85.2c-2.33-1.42-5.27-1.75-8.73-.96a.62.62 0 1 1-.28-1.21c3.79-.87 7.03-.49 9.66 1.12.3.18.39.57.2.85zm1.22-2.72a.78.78 0 0 1-1.07.26c-2.67-1.64-6.74-2.12-9.9-1.16a.78.78 0 1 1-.45-1.49c3.61-1.1 8.09-.56 11.16 1.32.37.23.48.7.26 1.07zm.1-2.83C14.98 9.1 9.08 8.9 5.7 9.94a.93.93 0 1 1-.54-1.78c3.88-1.18 10.32-.95 14.4 1.47a.93.93 0 1 1-.95 1.6z"/></svg>
+            </a></li>
+            <li><a href="https://www.youtube.com/@santiagoimaginario" rel="me noopener" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.13C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.13A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>
+            </a></li>
+            <li><a href="https://santiagoimaginario.bandcamp.com" rel="me noopener" aria-label="Bandcamp">
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/></svg>
+            </a></li>
+            <li><a href="https://music.apple.com/uy/artist/santiago-imaginario/1477313202" rel="me noopener" aria-label="Apple Music">
+                <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M23.997 6.124a9.23 9.23 0 0 0-.24-2.19 4.14 4.14 0 0 0-1.428-2.196A4.29 4.29 0 0 0 20.35.6 9.34 9.34 0 0 0 18.16.36H5.84a9.34 9.34 0 0 0-2.19.24A4.29 4.29 0 0 0 1.67 1.738 4.14 4.14 0 0 0 .243 3.934 9.23 9.23 0 0 0 .003 6.124C0 6.35 0 6.577 0 6.803v10.394c0 .226 0 .453.003.679a9.23 9.23 0 0 0 .24 2.19 4.14 4.14 0 0 0 1.428 2.196 4.29 4.29 0 0 0 2.196 1.428 9.34 9.34 0 0 0 2.19.24h12.32a9.34 9.34 0 0 0 2.19-.24 4.29 4.29 0 0 0 2.196-1.428 4.14 4.14 0 0 0 1.428-2.196 9.23 9.23 0 0 0 .24-2.19c.003-.226.003-.453.003-.679V6.803c0-.226 0-.453-.003-.679zM17.03 15.65c-.03.65-.2 1.28-.71 1.75-.5.46-1.1.6-1.75.6-.65 0-1.24-.15-1.72-.62-.47-.47-.6-1.08-.6-1.73 0-.68.14-1.29.63-1.76.44-.42.98-.6 1.58-.6.15 0 .3.01.44.04V9.3l-4.86 1.02v6.31c-.03.65-.2 1.27-.71 1.74-.5.46-1.1.6-1.75.6-.65 0-1.24-.15-1.72-.62-.47-.47-.6-1.08-.6-1.73 0-.68.14-1.29.63-1.76.44-.42.98-.6 1.58-.6.15 0 .29.01.43.04V8.4c0-.24.09-.43.32-.5l6.15-1.3c.32-.06.6.14.6.48v8.52z"/></svg>
+            </a></li>
+        </ul>
+    </footer>
     <script>
         if (Math.random() < 0.5) {
             document.getElementById('foto-random').classList.add('al-reves');
         }
     </script>
-    <script src="js/script.js?v=2" defer></script>
+    <script src="js/script.js?v=3" defer></script>
 </body>
 </html>
